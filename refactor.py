@@ -186,7 +186,7 @@ class Refactorer(object):
         self.modify_js_module()
         self.modify_templates()
         self.modify_django_files()
-        self.change_git_remote()
+        self.apply_changes_to_git_repo()
         self.run_extras()
     
 
