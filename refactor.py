@@ -169,7 +169,9 @@ class Refactorer(object):
         git('checkout', 'master')
         git('remote', 'remove', 'origin')
         git('remote', 'add', 'origin', self._repo_git)
+        print "Pushing refactoring changes..."
         git('push', '--all')
+        print "Pushing tags..."
         git('push', '--tags')
 
     def run_extras(self):
