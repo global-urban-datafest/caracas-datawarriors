@@ -81,14 +81,18 @@ class Refactorer(object):
         old_web = '"homepage": "https://github.com/brwr/thinkster-django-angular-boilerplate"'
         new_web = '"homepage": "%s"' % self._website
         new_text = text.replace(old_name, new_name).replace(old_web, new_web)
+        f.seek(0)
         f.write(new_text)
+        f.truncate()
         f.close()
 
     def modify_manage_py(self):
         f = open('./manage.py','r+')
         text = f.read()
         new_text = text.replace('thinkster_django_angular_boilerplate', self._project)
+        f.seek(0)
         f.write(new_text)
+        f.truncate()
         f.close()
 
     def modify_package_json(self):
@@ -101,7 +105,9 @@ class Refactorer(object):
         old_web = '"homepage": "https://github.com/brwr/thinkster-django-angular-boilerplate"'
         new_web = '"homepage": "%s"' % self._website
         new_text = text.replace(old_repo, new_repo).replace(old_web, new_web).replace(old_name, new_name)
+        f.seek(0)
         f.write(new_text)
+        f.truncate()
         f.close()
         
 
@@ -111,7 +117,9 @@ class Refactorer(object):
         old = 'web: gunicorn thinkster_django_angular_boilerplate.wsgi --log-file -'
         new = 'web: gunicorn %s.wsgi --log-file -' % self._project
         new_text = text.replace(old, new)
+        f.seek(0)
         f.write(new_text)
+        f.truncate()
         f.close()
 
     def modify_js_module(self):
@@ -123,7 +131,9 @@ class Refactorer(object):
         old = 'thinkster'
         new = '%s' % self._project
         new_text = text.replace(old, new)
+        f.seek(0)
         f.write(new_text)
+        f.truncate()
         f.close()
 
     def modify_templates(self):
@@ -139,7 +149,9 @@ class Refactorer(object):
                 n1 = '%s project' % self._project
                 n2 = '%s' % self._project
                 new_text = text.replace(o1, n1.title()).replace(o2, n2)
+                f.seek(0)
                 f.write(new_text)
+                f.truncate()
 
     def modify_django_files(self):
         folder = "./thinkster_django_angular_boilerplate/"
@@ -156,7 +168,9 @@ class Refactorer(object):
                 old = "thinkster_django_angular_boilerplate"
                 new = self._project
                 new_text = text.replace(old, new)
+                f.seek(0)
                 f.write(new_text)
+                f.truncate()
         import shutil
         shutil.copyfile(files[1], settings_env)
         os.rename(folder, "./" + self._project)
