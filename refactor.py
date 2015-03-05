@@ -117,14 +117,14 @@ class Refactorer(object):
     def modify_js_module(self):
         old_name = './static/javascripts/thinkster.js'
         new_name = './static/javascripts/%s.js' % self._project
-        f = open(old_name,'r+')
+        git('mv', old_name, new_name)
+        f = open(new_name,'r+')
         text = f.read()
         old = 'thinkster'
         new = '%s' % self._project
         new_text = text.replace(old, new)
         f.write(new_text)
         f.close()
-        os.rename(old_name, new_name)
 
     def modify_templates(self):
         templates = [
@@ -158,13 +158,13 @@ class Refactorer(object):
                 new_text = text.replace(old, new)
                 f.write(new_text)
         import shutil
-        shutil.copyfile(settings[1], settings_env)
+        shutil.copyfile(files[1], settings_env)
         os.rename(folder, "./" + self._project)
 
     def apply_changes_to_git_repo(self):
         git('add','.')
         git('commit','-m','Boilerplate refactored to new project: {0}'.format(self._project))
-        git('checkout', 'release')
+        git('checkout', '--track', 'origin/release')
         git('merge', 'master')
         git('checkout', 'master')
         git('remote', 'remove', 'origin')
