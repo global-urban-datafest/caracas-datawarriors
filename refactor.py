@@ -11,8 +11,13 @@ import os
 import argparse
 import subprocess
 
+
+def run(*args):
+    return subprocess.check_output(list(args))
+
+
 def git(*args):
-    return subprocess.check_output(['git'] + list(args))
+    return run(['git'] + list(args))
 
 
 class Refactorer(object):
@@ -25,6 +30,7 @@ class Refactorer(object):
         self._repo_git = None
         self._website = None
         self._run_extras = False
+        self._run_server = False
 
     def __repr__(self):
         return self.__str__()
@@ -59,7 +65,9 @@ class Refactorer(object):
         args_parser.add_argument('-w','--website', 
             help="your project's website. Default: repo_address (without .git extension)")
         args_parser.add_argument('-e','--run-extras', 
-            help="run extra commands indicated in README.md (not implemented yet)", action='store_true')
+            help="run extra commands indicated in README.md (requires sudo)", action='store_true')
+        args_parser.add_argument('-s','--runserver', 
+            help="starts django development web server in http://localhost:8000/", action='store_true')
         ns = args_parser.parse_args()
         if ns.repo_address is None:
             ns.repo_address = "https://%s/%s/%s.git" % (
@@ -72,6 +80,7 @@ class Refactorer(object):
         self._repo_git = "git@%s:%s/%s.git" % (
             ns.git_remote_host, ns.username, ns.project_name)
         self._run_extras = ns.run_extras
+        self._run_server = ns.runserver
 
     def modify_bower_json(self):
         f = open('./bower.json','r+')
@@ -191,7 +200,21 @@ class Refactorer(object):
     def run_extras(self):
         if self._run_extras:
             print 'Running extra commands...'
-            # TODO: run extra commands
+            # * `$ mkvirtualenv your-project-env`
+            run('mkvirtualenv', self._project)
+            # * `$ pip install -r requirements.txt`
+            run('pip', 'install', '-r', 'requirements.txt')
+            # * `$ npm install -g bower`
+            run('sudo', 'npm', 'install', '-g', 'bower')
+            # * `$ npm install`
+            run('npm', 'install')
+            # * `$ bower install`
+            run('bower', 'install')
+            # * `$ python manage.py migrate`
+            run('python', 'manage.py', 'migrate')
+            if self._run_server:
+                # * `$ python manage.py runserver`
+                run('python', 'manage.py', 'runserver')
 
     def run(self):
         self.process_args()
