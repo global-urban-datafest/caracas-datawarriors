@@ -15,3 +15,6 @@ dist/
 
 # Staticfiles
 staticfiles/
+
+# Django settings
+settings.py
