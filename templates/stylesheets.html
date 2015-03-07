@@ -2,6 +2,7 @@
 {% load staticfiles %}
 
 {% compress css %}
+<!--Boilerplate-->
 <link rel="stylesheet" type="text/css" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'bower_components/bootstrap-material-design/dist/css/material.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'bower_components/bootstrap-material-design/dist/css/ripples.min.css' %}" />
@@ -11,4 +12,13 @@
 <link rel="stylesheet" type="text/css" href="{% static 'lib/snackbarjs/snackbar.min.css' %}" />
 
 <link rel="stylesheet" type="text/css" href="{% static 'stylesheets/styles.css' %}" />
+
+
+<!--Vendor-->
+<link rel="stylesheet" type="text/css" href="{% static 'vendor/bower_components/bootstrap/dist/css/bootstrap.min.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'vendor/bower_components/metisMenu/dist/metisMenu.min.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'vendor/dist/css/timeline.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'vendor/bower_components/morrisjs/morris.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'vendor/bower_components/font-awesome/css/font-awesome.min.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'vendor/dist/css//sb-admin-2.css' %}" />
 {% endcompress %}

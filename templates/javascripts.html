@@ -2,6 +2,8 @@
 {% load staticfiles %}
 
 {% compress js %}
+
+<!--Boilerplate-->
 <script type="text/javascript" src="{% static 'bower_components/jquery/dist/jquery.js' %}"></script>
 <script type="text/javascript" src="{% static 'bower_components/bootstrap/dist/js/bootstrap.js' %}"></script>
 <script type="text/javascript" src="{% static 'bower_components/bootstrap-material-design/dist/js/material.js' %}"></script>
@@ -15,5 +17,18 @@
 <script type="text/javascript" src="{% static 'bower_components/ngDialog/js/ngDialog.js' %}"></script>
 <script type="text/javascript" src="{% static 'lib/snackbarjs/snackbar.min.js' %}"></script>
 
+<!--Our Bowers-->
+<script type="text/javascript" src="{% static 'bower_components/angular-ui-router/release/angular-ui-router.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'bower_components/angular-bootstrap/ui-bootstrap.min.js' %}"></script>
+
+<!--Agular-->
 <script type="text/javascript" src="{% static 'javascripts/datawarriors.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/routes.js' %}"></script>
+
+<!--Vendor-->
+<script type="text/javascript" src="{% static 'vendor/bower-components/metisMenu/dist/metisMenu.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'vendor/bower_components/raphael/raphael-min.js' %}"></script>
+<script type="text/javascript" src="{% static 'vendor/bower_components/morrisjs/morris.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'vendor/dist/js/sb-admin-2.js' %}"></script>
+
 {% endcompress %}
