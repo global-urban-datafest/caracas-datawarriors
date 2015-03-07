@@ -1,4 +1,4 @@
-from pymongo import MongoClient
+import pymongo
 
 class DBInterface():
 
@@ -9,8 +9,12 @@ class DBInterface():
         self.db = None
 
     def connect(self):
-        self.client = MongoClient(self.hostname, self.port)
+        self.client = pymongo.MongoClient(self.hostname, self.port)
         self.db = self.client.hackathon
 
     def insert_train_samples(self, documents):
-        self.db.sentimentTrain.insert(documents)
+        try:
+            self.db.sentimentTrain.insert(documents)
+            return 1
+        except pymongo.errors.DuplicateKeyError:
+            return 0

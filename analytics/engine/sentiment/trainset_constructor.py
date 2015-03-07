@@ -29,6 +29,8 @@ class TrainsetConstructor():
                 return -1
             elif x == "NEU":
                 return 0
+            elif x == "NONE":
+                return -2
 
         text = open(self.filename).read()
         tweet_id = re.findall('<tweetid>(\d+)</tweetid>', text)
@@ -38,9 +40,9 @@ class TrainsetConstructor():
         if len(tweet_id) != len(value):
             print "ids and values do not correspond, check parsing method"
             exit(-1)
-        tweet_id, value = zip(*filter(lambda (_,val): val != "NONE", zip(tweet_id, value)))
         value = map(lambda x: normalize_value(x), value)
         tweet_id = map(lambda x: int(x), tweet_id)
+
         return tweet_id, value
 
     def run(self):
@@ -70,10 +72,9 @@ class TrainsetConstructor():
                     doc['sentiment'] = val
                     documents.append(doc)
 
-                self.db.insert_train_samples(documents)
-
-                index += 100
-                print "tweets inserted", index
+                if self.db.insert_train_samples(documents):
+                    index += 100
+                    print "tweets inserted", index
 
             except tweepy.TweepError as e:
                 if e[0][u'code'] == 88:
