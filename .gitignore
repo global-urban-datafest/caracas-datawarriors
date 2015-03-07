@@ -18,3 +18,7 @@ staticfiles/
 
 # Django settings
 settings.py
+
+#virtualen
+env/
+
