@@ -77,12 +77,13 @@ class TrainsetConstructor():
                     print "tweets inserted", index
 
             except tweepy.TweepError as e:
-                if e[0][u'code'] == 88:
-                    print e[0][u'message']
+                error_code = e.args[0][0][u'code']
+                if error_code == 88:
+                    print e.args[0][0][u'message']
                     print "wating 15 mins to restart"
                     time.sleep(900)
                 else:
-                    print e[0][u'message']
+                    print e.args[0][0][u'message']
                     print "index", index
                     time.sleep(1)
 
