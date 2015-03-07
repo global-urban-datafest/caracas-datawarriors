@@ -1,5 +1,5 @@
 """
-Django settings for thinkster_django_angular_boilerplate project.
+Django settings for datawarriors project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.7/topics/settings/
@@ -30,7 +30,7 @@ DEBUG = os.environ.get('DEBUG', True)
 
 TEMPLATE_DEBUG = True
 
-WSGI_APPLICATION = 'thinkster_django_angular_boilerplate.wsgi.application'
+WSGI_APPLICATION = 'datawarriors.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
