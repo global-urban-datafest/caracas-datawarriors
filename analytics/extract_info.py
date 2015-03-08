@@ -8,8 +8,10 @@ from pymongo import MongoClient
 from bson.code import Code
 
 
-db = db_interface.DBInterface('localhost')
+db = db_interface.DBInterface('192.168.1.144')
 db.connect()
+
+
 
 
 neighbourhoods = [u'pueblo de el hatillo', u'el calvario', u'la lagunita', u'alto hatillo', \
@@ -81,18 +83,25 @@ if opts.processing == 'location':
             prep_count += 1
     print "Locations inserted:", loc_count
     print "Preprocessed tweets inserted:", prep_count
+
 if opts.processing == 'category':
     key_count = 0
-    regexes = map(lambda x: "(" + x.lower() +")", keywords)
+    regexes = [r'(basura|aseo|reciclaje|recliclar|limpieza|desechos)', \
+               r'(calle|hueco|semaforo|trafico|cola|congestion|vias|via|avenida|remolque|remolcar|ciclovia)', \
+               r'(secuestro|robo|secuestraron|robaron|asaltaron|asalto|policia|inseguridad|inseguro)']
+
+    categories = [0, 1, 2]
 
     tweets, ids = db.get_tweets()
+    print len(tweets)
+    tweets = utils.preprocess(tweets)
 
     for (text, id) in zip(tweets, ids):
-        for reg in regexes:
-            out = re.search(reg, text)
-            if out:
-                keyword = out.group(1)
-                if db.set_category(id, location):
+        for (reg, cat) in zip(regexes, categories):
+            if re.search(reg, text):
+                if db.set_category(id, cat):
                     key_count += 1
+
+    print "Found", key_count, "in-category tweets"
 
 
