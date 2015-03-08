@@ -23,7 +23,12 @@ govControllers.controller('govProfileCtr', [
         id: 2,
         name: "Alcaldía de Sucre",
         mayor: "Carlos Oscariz",
-        politics: ["1", "2"]
+        politics: [
+          "Seguridad: Una policía más grande, inteligente y eficiente, Incrementar el número de funcionarios, patrullas, motos y equipamiento policial para mejorar la seguridad, Patrullaje comunitario",
+          "Vías: Mantenimiento de vías con bacheo y afaltado, Manejo del flujo de tráfico",
+          "Basura: Nuevas empresas en el servicio de recolección de basura, Supervisión del servicio de recolección con las últimas tecnologías, Fomentación del reciclaje" 
+
+        ]
       };
     }
     

@@ -14,7 +14,8 @@ angular.module('datawarriors').config([
   $stateProvider
    .state('dashboard', {
      url: '/',
-     //templateUrl: "views/index.html"
+     templateUrl: "views/dashboard.html"
+
    })
    .state('gov', {
      abstract: true,
@@ -32,3 +33,4 @@ angular.module('datawarriors').config([
      controller: "govCategorieCtr"
    });
   }]);
+
