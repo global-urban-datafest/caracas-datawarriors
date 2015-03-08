@@ -9,17 +9,23 @@ angular.module('datawarriors').config([
   function ($stateProvider, $urlRouterProvider, $locationProvider) {
      
   $urlRouterProvider.otherwise("/");
-    $locationProvider.html5Mode(true);
+    //$locationProvider.html5Mode(true);
 
   $stateProvider
    .state('dashboard', {
      url: '/',
-     templateUrl: "views/index.html"
-   });
+     templateUrl: "views/dashboard.html"
 
-  $stateProvider
-   .state('category', {
-     url: '/category',
-     templateUrl: "views/category.html"
+   })
+   .state('gov', {
+     abstract: true,
+     url: '/gov',
+     template: "<ui-view/>"
+   })
+   .state('gov.profile', {
+     url: '/:govId',
+     templateUrl: "views/gov.html",
+     controller: "govProfileCtr"
    });
   }]);
+
