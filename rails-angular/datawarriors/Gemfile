@@ -1,0 +1,30 @@
+source 'https://rubygems.org'
+
+gem 'rails', '4.0.2'
+
+group :development, :test do
+    gem 'shoulda-matchers'
+    gem 'factory_girl_rails', '~> 4.0'
+    gem 'ffaker', '~> 1.24'
+end
+
+gem 'mongoid', github:'mongoid/mongoid'
+gem 'bson_ext'
+gem 'jbuilder', '~> 1.2'
+gem 'exception_notification'
+gem 'virtus'
+gem 'awesome_print'
+gem 'rack-cors'
+
+
+# Use ActiveModel has_secure_password
+# gem 'bcrypt-ruby', '~> 3.1.2'
+
+# Use unicorn as the app server
+# gem 'unicorn'
+
+# Use Capistrano for deployment
+# gem 'capistrano', group: :development
+
+# Use debugger
+# gem 'debugger', group: [:development, :test]

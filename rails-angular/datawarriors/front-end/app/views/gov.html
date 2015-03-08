@@ -1,0 +1,122 @@
+<!-- Profile -->
+<div class="row">
+  <br/>
+  <div class="text-right">
+    <a  ng-class="gov.id == 1 ? 'color-green' : 'color-yellow'" href="/#/">
+      <span class="fa-stack fa-lg">
+	<i class="fa fa-circle fa-stack-2x"></i>
+	<i class="fa fa-angle-left fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>    
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-3 col-md-4 col-sm-6">
+    <br/>
+    <div class="text-center visible-xs-block">
+      <img class="img-circle"  src="/images/{{ gov.id }}.jpg">
+    </div>
+    <div class="text-right hidden-xs">
+      <img class="img-circle"  src="/images/{{ gov.id }}.jpg">
+    </div>
+  </div>
+  <div class="col-lg-5 col-md-8 col-sm-6">
+    <div class="hidden-xs padding-top">
+      <h2><span class="text-bold">{{gov.name}}</span></h2>
+      <h3>Alcalde <span class="text-bold">{{gov.mayor}}</span></h3>
+      
+      <a ng-class="gov.id == 1 ? 'color-green' : 'color-yellow'" href="#">
+	<span class="fa-stack fa-lg">
+	  <i class="fa fa-circle fa-stack-2x"></i>
+	  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+	</span>
+      </a>
+    </div>
+    <div class="visible-xs-block text-center">
+      <h2><span class="text-bold">{{gov.name}}</span></h2>
+      <h3>Alcalde <span class="text-bold">{{gov.mayor}}</span></h3>
+      
+      <a ng-class="gov.id == 1 ? 'color-green' : 'color-yellow'" ng-click="goCategory(1)">
+	<span class="fa-stack fa-lg">
+	  <i class="fa fa-circle fa-stack-2x"></i>
+	  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+	</span>
+      </a>    
+    </div>    
+  </div>
+  <div class="col-lg-4 col-md-12 col-sm-12 text-center">
+    <hr class="hidden-lg">
+    <h2 class="text-center">Categor&iacute;as</h2>
+    <a href="" ng-class="gov.id == 1 ? 'color-green' : 'color-yellow'" ng-click="goCategory(2)">
+      <span class="fa-stack fa-3x">
+	<i class="fa fa-circle fa-stack-2x"></i>
+	<i class="fa fa-gavel fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+    <a href="" ng-class="gov.id == 1 ? 'color-green' : 'color-yellow'"  ng-click="goCategory(0)">
+      <span class="fa-stack fa-3x">
+	<i class="fa fa-circle fa-stack-2x"></i>
+	<i class="fa fa-trash fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+    <a href="" ng-class="gov.id == 1 ? 'color-green' : 'color-yellow'"  ng-click="goCategory(1)">
+      <span class="fa-stack fa-3x">
+	<i class="fa fa-circle fa-stack-2x"></i>
+	<i class="fa fa-car fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </div>
+</div>
+
+<hr>
+
+<!-- Policies-->
+<div class="row">
+  <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11 text-center">
+    <h2 class="text-center">Pol&iacute;ticas</h2>
+  </div>
+  <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+    <div class="text-right">
+      <a  ng-class="gov.id == 1 ? 'color-green' : 'color-yellow'" href="#" ng-click="politicas=politicas + 1" ng-init="politicas=0">
+	<span class="fa-stack fa-lg">
+	  <i class="fa fa-circle fa-stack-2x"></i>
+	  <i class="fa fa-angle-up fa-stack-1x fa-inverse" ng-class="{true: 'fa-angle-down'}[politicas % 2 == 1]"></i>
+	</span>
+      </a>    
+    </div>
+  </div>
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-class="{true: 'hidden'}[politicas % 2 == 1]">
+    <ul>
+      <li ng-repeat="p in gov.politics">{{p}}</li>
+    </ul>
+  </div>
+</div>
+
+<hr>
+
+<!-- Tweets -->
+<div class="row">
+  <div class="col-lg-12">
+    <div class="text-center">
+      <a ng-class="gov.id == 1 ? 'color-green' : 'color-yellow'" ng-click="goRelevance(0)">
+          <span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-map-marker fa-stack-1x fa-inverse" ng-class="{true: 'fa-angle-down'}[politicas % 2 == 1]"></i>
+          </span>
+      </a>
+      <a ng-class="gov.id == 1 ? 'color-green' : 'color-yellow'" ng-click="goSentiment(0)">
+          <span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-heart fa-stack-1x fa-inverse" ng-class="{true: 'fa-angle-down'}[politicas % 2 == 1]"></i>
+          </span>
+      </a>
+    </div>
+    
+    <!-- UI View-->
+    <ui-view>
+    </ui-view>
+    
+  </div>
+</div>
+
+

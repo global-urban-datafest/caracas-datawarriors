@@ -14,12 +14,12 @@ angular.module('datawarriors').config([
   $stateProvider
    .state('dashboard', {
      url: '/',
-     templateUrl: "/static/views/index.html"
+     //templateUrl: "index.html"
    });
 
   $stateProvider
    .state('category', {
      url: '/category',
-     templateUrl: "/static/views/category.html"
+     templateUrl: "/views/category.html"
    });
   }]);

@@ -1,0 +1,44 @@
+*  {
+  font-family: 'Lato', sans-serif;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.text-primary, .text-primary:hover {
+  color: #4285f4 !important;
+}
+
+.text-selected, .text-selected:hover {
+  color: #023B99 !important; 
+}
+
+.bg-primary {
+  background-color: #4285f4;
+}
+
+.padding-top {
+  padding-top:30px;
+}
+
+.hidden {
+  visibility: none;
+}
+
+.inline {
+  display: inline;
+  margin-left: 5px;
+}
+
+.color-green {
+  color: #5cb85c !important;
+}
+
+.color-yellow {
+  color: #f0ad4e !important;
+}
+
+.color-red {
+  color: #d9534f !important;
+}
