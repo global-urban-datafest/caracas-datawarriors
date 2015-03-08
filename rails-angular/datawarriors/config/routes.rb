@@ -10,9 +10,13 @@ Datawarriors::Application.routes.draw do
         #get 'first', on: :collection, action: 'first'
       end
 
-      resources :categories, only: [:index]
+      resources :categories, only: [:index] do
+        get 'all', on: :collection, action: 'all'
+      end
 
-      resources :words, only: [:index]
+      resources :relevants, only: [:index] do
+        get 'all', on: :collection, action: 'all'
+      end
       
     end
   end
