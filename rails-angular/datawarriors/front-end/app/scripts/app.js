@@ -17,5 +17,7 @@ angular
     'ngSanitize',
     'ngTouch',
     'ui.bootstrap',
-    'ui.router'  
-  ]);
+    'ui.router',
+    'govControllers',
+    'restServices',
+  ]).constant('API_PREFIX', '/api/v1');
