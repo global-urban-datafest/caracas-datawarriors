@@ -15,7 +15,6 @@ gem 'exception_notification'
 gem 'virtus'
 gem 'awesome_print'
 gem 'rack-cors'
-source 'https://rubygems.org'
 
 
 # Use ActiveModel has_secure_password
