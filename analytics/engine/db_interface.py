@@ -18,3 +18,11 @@ class DBInterface():
             return 1
         except pymongo.errors.DuplicateKeyError:
             return 0
+
+    def set_tweet(self, tweet):
+        try:
+            self.db.tweets.insert(tweet)
+            return 1
+        except pymongo.errors.DuplicateKeyError:
+            print "Duplicate Error"
+            return 0
