@@ -15,5 +15,5 @@ angular.module('datawarriors').config([
    .state('dashboard', {
      url: '/',
      templateUrl: "/static/views/index.html"
-   })
+   });
   }]);
