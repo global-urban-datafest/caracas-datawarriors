@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import optparse
 
 from engine import db_interface

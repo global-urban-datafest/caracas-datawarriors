@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import pymongo
 
 class DBInterface():
@@ -20,23 +22,41 @@ class DBInterface():
             return 0
 
     def get_training_data(self, limit_size):
-        print "get_training_data"
-        print self.db
         try:
-            res_pos = self.db.sentimentTrain.find({'sentiment':1},{'text':1}).limit(limit_size)
-            res_neg = self.db.sentimentTrain.find({'sentiment':-1},{'text':1}).limit(limit_size)
-            res_neu = self.db.sentimentTrain.find({'sentiment':0},{'text':1}).limit(limit_size)
-            res_non = self.db.sentimentTrain.find({'sentiment':-2},{'text':1}).limit(limit_size)
-            print res_pos
-            print len(res_pos), len(res_neg), len(res_neu), len(res_none)
+            res_pos = [e["text"] for e in self.db.sentimentTrain.find({'sentiment':1},{'text':1}).limit(limit_size)]
+            res_neg = [e["text"] for e in self.db.sentimentTrain.find({'sentiment':-1},{'text':1}).limit(limit_size)]
+            res_neu = [e["text"] for e in self.db.sentimentTrain.find({'sentiment':0},{'text':1}).limit(limit_size)]
+            res_non = [e["text"] for e in self.db.sentimentTrain.find({'sentiment':-2},{'text':1}).limit(limit_size)]
             return (res_pos, res_neg, res_neu, res_non)
+            print res_pos
         except Exception, e:
             print str(e)
+            return ([],[],[],[])
+
 
     def set_tweet(self, tweet):
         try:
-            self.db.tweets.insert(tweet)
+            self.db.tweets.update({'id': tweet["id"]}, {'$set': tweet}, upsert=True)
             return 1
-        except pymongo.errors.DuplicateKeyError:
-            print "Duplicate Error"
+        except Exception, e:
+            print str(e)
+            return 0
+
+    def get_tweets(self):
+        try:
+            result = [e for e in self.db.tweets.find({},{'text':1, 'id':1})]
+            print len(result)
+            tweet_text = [e["text"] for e in result]
+            tweet_id = [e["id"] for e in result]
+            return (tweet_text, tweet_id)
+        except Exception, e:
+            print str(e)
+            return ([], [])
+
+    def set_predicted_sentiment(self, tweet_id, sentiment):
+        try:
+            self.db.tweets.update({'id': tweet_id}, {'$set': {'sentiment': sentiment}})
+            return 1
+        except Exception, e:
+            print str(e)
             return 0

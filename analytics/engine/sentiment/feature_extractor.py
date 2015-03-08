@@ -2,9 +2,10 @@
 
 import json
 import re
+import unicodedata
 from regex import hashtag, url, happy_emoticon, sad_emoticon
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.decomposition import PCA
+from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
+from sklearn.feature_selection import SelectKBest, chi2
 from numpy import concatenate
 
 
@@ -21,36 +22,50 @@ class FeatureExtractor():
         return [[float(x[0]-minim)/(maxim-minim)]\
                  if x[0] < maxim else [1.0] for x in feature]
 
+    def preprocess(self, corpus):
+        corpus = [map(lambda x: x.lower(), tweet) for tweet in corpus]
+        corpus = [map(lambda x: (unicodedata.normalize('NFKD', x)).encode('ASCII', 'ignore'), tweet)
+                  for tweet in corpus]
+        corpus = [filter(lambda x: len(x)>2, tweet) for tweet in corpus]
+        corpus = [filter(lambda x: x.isalnum() or re.match(r'(#|@)\w+', x), tweet) for tweet in corpus]
+        corpus = [filter(lambda x: x not in self.dictionary, tweet) for tweet in corpus]
+        return corpus
+
 class ConcatenateFeatures(FeatureExtractor):
     def __init__(self, features=[]):
         self.features = features
 
     def run(self, corpus, test=False):
-        concat = self.features[0].run(corpus)
+        concat = self.features[0].run(corpus, test)
         for i in range(1, len(self.features)):
             concat = concatenate((concat, \
                     self.features[i].run(corpus)), axis=1)
         return concat
 
 class UnigramFeatures(FeatureExtractor):
-    def __init__(self, stopword_file):
+    def __init__(self, labels, k, stopword_file):
         with open(stopword_file) as text:
             self.dictionary = text.read().split()
+            self.y_train=labels
+            self.k=k
 
     def run(self, corpus, test=False):
-        corpus = [filter(lambda x: x not in self.dictionary, tweet) \
-                  for tweet in corpus]
+        print "TEST", test
+        corpus = self.preprocess(corpus)
         corpus = [" ".join(tweet) for tweet in corpus]
         if not test:
             self.vectorizer = TfidfVectorizer(min_df=1)
+            print "fitting vectorizer"
             x_train = self.vectorizer.fit_transform(corpus)
-            self.pca = PCA()
-            x_train = self.pca.fit_transform(x_train.toarray())
-            return x_train
+            print "fitting chi2"
+            self.ch2 = SelectKBest(chi2, self.k)
+            x_train = self.ch2.fit_transform(x_train, self.y_train)
+            res = x_train.toarray()
+            return res
         else:
             x_test = self.vectorizer.transform(corpus)
-            x_test = self.pca.transform(x_test.toarray())
-            return x_test
+            x_test = self.ch2.transform(x_test)
+            return x_test.toarray()
 
 class TweetWordCount(FeatureExtractor):
     def run(self, corpus, test=False):
@@ -155,6 +170,7 @@ class StopWordsCount(FeatureExtractor):
             self.dictionary = text.read().split()
 
     def run(self, corpus, test=False):
+        corpus = self.preprocess(corpus)
         feature = [[len(filter(lambda x: x not in self.dictionary, tweet))]\
                     for tweet in corpus]
         if not test:
