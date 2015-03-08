@@ -55,7 +55,7 @@ class DBInterface():
 
     def set_predicted_sentiment(self, tweet_id, sentiment):
         try:
-            self.db.tweets.update({'id': tweet_id}, {'$set': {'sentiment': sentiment}})
+            self.db.tweets.update({'id': tweet_id}, {'$set': {'sentiment': sentiment}}, upsert=True)
             return 1
         except Exception, e:
             print str(e)
@@ -63,7 +63,7 @@ class DBInterface():
 
     def set_neighbourhood(self, tweet_id, neighbourhood):
         try:
-            self.db.tweets.update({'id': tweet_id}, {'$set': {'neighbourhood': neighbourhood}})
+            self.db.tweets.update({'id': tweet_id}, {'$set': {'neighbourhood': neighbourhood}}, upsert=True)
             return 1
         except Exception, e:
             print str(e)
@@ -71,7 +71,7 @@ class DBInterface():
 
     def set_preprocessed_text(self, tweet_id, preproc_text):
         try:
-            self.db.tweets.update({'id': tweet_id}, {'$set': {'preproc_text': preproc_text}})
+            self.db.tweets.update({'id': tweet_id}, {'$set': {'preproc_text': preproc_text}}, upsert=True)
             return 1
         except Exception, e:
             print str(e)
@@ -79,8 +79,36 @@ class DBInterface():
 
     def set_category(self, tweet_id, category):
         try:
-            self.db.tweets.update({'id': tweet_id}, {'$set': {'category': category}})
+            self.db.tweets.update({'id': tweet_id}, {'$set': {'category': category}}, upsert=True)
             return 1
         except Exception, e:
             print str(e)
             return 0
+
+    def get_tweet_screen_names(self):
+        try:
+            result = self.db.tweets.find({},{"user": 1, "id":1})
+            result = [e for e in result]
+            screen_names = [e["user"]["screen_name"] for e in result]
+            tweet_ids = [e["id"] for e in result]
+            return (tweet_ids, screen_names)
+        except Exception, e:
+            print str(e)
+            return ([],[])
+
+    def set_is_base_account(self, tweet_id, is_base):
+        try:
+            self.db.tweets.update({'id': tweet_id}, {'$set': {'is_base': is_base}})
+            return 1
+        except Exception, e:
+            print str(e)
+            return 0
+
+    def set_words(self, document):
+        try:
+            self.db.words.insert(document)
+            return 1
+        except Exception, e:
+            print str(e)
+            return 0
+

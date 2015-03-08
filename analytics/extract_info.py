@@ -8,8 +8,10 @@ from pymongo import MongoClient
 from bson.code import Code
 
 
-db = db_interface.DBInterface('localhost')
+db = db_interface.DBInterface('10.250.251.16')
 db.connect()
+
+
 
 
 neighbourhoods = [u'pueblo de el hatillo', u'el calvario', u'la lagunita', u'alto hatillo', \
@@ -61,9 +63,19 @@ for m in mandatories:
         exit(-1)
 
 # preprocess
+if opts.processing == 'preproc':
+    prep_count = 0
+    tweets, ids = db.get_tweets()
+    tweets = utils.preprocess(tweets)
+
+    for (text, id) in zip(tweets, ids):
+        text = utils.remove_stopwords(text,opts.filename)
+        if db.set_preprocessed_text(id, text):
+            prep_count += 1
+    print "Preprocessed tweets inserted:", prep_count
+
 if opts.processing == 'location':
     loc_count = 0
-    prep_count = 0
     regexes = map(lambda x: "(" + x.lower() +")", neighbourhoods)
 
     tweets, ids = db.get_tweets()
@@ -76,23 +88,31 @@ if opts.processing == 'location':
                 location = out.group(1)
                 if db.set_neighbourhood(id, location):
                     loc_count += 1
-        utils.remove_stopwords(text,opts.filename)
-        if db.set_preprocessed_text(id, text):
-            prep_count += 1
     print "Locations inserted:", loc_count
-    print "Preprocessed tweets inserted:", prep_count
+
 if opts.processing == 'category':
     key_count = 0
-    regexes = map(lambda x: "(" + x.lower() +")", keywords)
+    regexes = [r'(\W|^)(basura|aseo|reciclaje|recliclar|limpieza|desechos)(\W|$)', \
+               r'(\W|^)(calle|hueco|semaforo|trafico|cola|congestion|vias|via|avenida|remolque|remolcar|ciclovia)(\W|$)', \
+               r'(\W|^)(secuestro|robo|secuestraron|robaron|asaltaron|asalto|policia|inseguridad|inseguro)(\W|$)']
+
+    categories = [0, 1, 2]
 
     tweets, ids = db.get_tweets()
+    print len(tweets)
+    tweets = utils.preprocess(tweets)
 
     for (text, id) in zip(tweets, ids):
-        for reg in regexes:
-            out = re.search(reg, text)
-            if out:
-                keyword = out.group(1)
-                if db.set_category(id, location):
+        for (reg, cat) in zip(regexes, categories):
+            if re.search(reg, text):
+                #if cat == 0:
+                #    if id== 574251050141630464:
+                #        print id, text
+                #    print reg, cat
+                #    print text
+                if db.set_category(id, cat):
                     key_count += 1
+
+    print "Found", key_count, "in-category tweets"
 
 
