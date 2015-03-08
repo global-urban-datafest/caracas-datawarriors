@@ -49,7 +49,8 @@ class UnigramFeatures(FeatureExtractor):
             self.y_train=labels
             self.k=k
 
-    def run(self, corpus, test=False):
+    def run(self, corpus, test=False
+            ):
         print "TEST", test
         corpus = self.preprocess(corpus)
         corpus = [" ".join(tweet) for tweet in corpus]
