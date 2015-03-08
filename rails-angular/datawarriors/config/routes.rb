@@ -6,6 +6,8 @@ Datawarriors::Application.routes.draw do
       
       resources :tweets, only: [:index] do
         get 'sentiment', on: :collection, action: 'sentiment'
+        #get 'all', on: :collection, action: 'all'
+        #get 'first', on: :collection, action: 'first'
       end
 
       resources :categories, only: [:index]

@@ -1,4 +1,4 @@
-class Categories
+class Category
   include Mongoid::Document
 
   field :id, type: Integer
