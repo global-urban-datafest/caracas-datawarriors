@@ -84,3 +84,30 @@ class DBInterface():
         except Exception, e:
             print str(e)
             return 0
+
+    def get_tweet_screen_names(self):
+        try:
+            result = self.db.tweets.find({},{"user": 1, "id":1})
+            result = [e for e in result]
+            screen_names = [e["user"]["screen_name"] for e in result]
+            tweet_ids = [e["id"] for e in result]
+            return (tweet_ids, screen_names)
+        except Exception, e:
+            print str(e)
+            return ([],[])
+
+    def set_is_base_account(self, tweet_id, is_base):
+        try:
+            self.db.tweets.update({'id': tweet_id}, {'$set': {'is_base': is_base}})
+            return 1
+        except Exception, e:
+            print str(e)
+            return 0
+
+    def set_words(self, document):
+        try:
+            self.db.words.insert(document)
+            return 1
+        except Exception, e:
+            print str(e)
+            return 0

@@ -63,9 +63,19 @@ for m in mandatories:
         exit(-1)
 
 # preprocess
+if opts.processing == 'preproc':
+    prep_count = 0
+    tweets, ids = db.get_tweets()
+    tweets = utils.preprocess(tweets)
+
+    for (text, id) in zip(tweets, ids):
+        utils.remove_stopwords(text,opts.filename)
+        if db.set_preprocessed_text(id, text):
+            prep_count += 1
+    print "Preprocessed tweets inserted:", prep_count
+
 if opts.processing == 'location':
     loc_count = 0
-    prep_count = 0
     regexes = map(lambda x: "(" + x.lower() +")", neighbourhoods)
 
     tweets, ids = db.get_tweets()
@@ -78,11 +88,7 @@ if opts.processing == 'location':
                 location = out.group(1)
                 if db.set_neighbourhood(id, location):
                     loc_count += 1
-        utils.remove_stopwords(text,opts.filename)
-        if db.set_preprocessed_text(id, text):
-            prep_count += 1
     print "Locations inserted:", loc_count
-    print "Preprocessed tweets inserted:", prep_count
 
 if opts.processing == 'category':
     key_count = 0
