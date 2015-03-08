@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import pymongo
+from bson.code import Code
 
 class DBInterface():
 
@@ -104,11 +105,64 @@ class DBInterface():
             print str(e)
             return 0
 
-    def set_words(self, document):
-        try:
-            self.db.words.insert(document)
-            return 1
-        except Exception, e:
-            print str(e)
-            return 0
+    def mr_count_words(self, gov, category, collection_name):
+        map = Code("function(){"
+            "var text = this.preproc_text;"
+            "if (text){"
+            "    text = text.toLowerCase().split(/\s+/);"
+            "    for (var i = text.length - 1; i >= 0; i--){"
+            "    if (text[i]){"
+            "            emit(text[i], 1);"
+            "            }"
+            "        }"
+            "    }"
+            "}")
+
+        reduce = Code("function(key, values){"
+            "var count = 0;"
+            "values.forEach(function(v){"
+                "count += v"
+            "});"
+            "return count;"
+            "}")
+
+        result = self.db.tweets.map_reduce(map, reduce, collection_name, query={"gov": gov, "category": category})
+        return result
+
+    def create_relevant(self, gov_id, category):
+        self.db.relevants.update({'gov':gov_id, 'category':category},\
+                                 {'$set': {'gov': gov_id, 'category': category}},\
+                                 upsert=True)
+
+    def set_top_relevants(self, gov_id, category, collection_name, att):
+        result = self.db[collection_name].find().sort('value', -1).limit(20)
+        result = [e for e in result]
+        self.db.relevants.update({'gov':gov_id, 'category': category},\
+                {'$set': {att: result}}, upsert=True)
+
+    def mr_frequent_location(self, gov, category, collection_name):
+        map = Code("function(){"
+            "var n = this.neighbourhood;"
+            "if (n){"
+            "   emit(n, 1);"
+            "    }"
+            "}")
+
+        reduce = Code("function(key, values){"
+            "var count = 0;"
+            "values.forEach(function(v){"
+                "count += v"
+            "});"
+            "return count;"
+            "}")
+
+        result = self.db.tweets.map_reduce(map, reduce, collection_name, query={"gov": gov, "category": category})
+        return result
+
+    def drop_collection(self, collection_name):
+        self.db.drop_collection(collection_name)
+
+    def remove_documents(self, collection_name):
+        self.db[collection_name].remove()
+        print self.db[collection_name].count()
 
