@@ -48,7 +48,8 @@ govControllers.controller('govCategorieCtr', [
   'Categories',
   function($scope, $state, Tweets, Categories) {
     $scope.category = $state.params.categoryId;
-    Tweets.sentiment($state.params.govId, $state.params.categoryId);
-
-    
+    Tweets.sentiment($state.params.govId, $state.params.categoryId).success(function(data){
+      $scope.tweets = data;
+      window.tweets = $scope.tweets;
+    });
 }]);

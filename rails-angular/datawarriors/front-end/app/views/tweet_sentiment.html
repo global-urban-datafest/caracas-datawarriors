@@ -1,0 +1,17 @@
+<div class="col-md-4">
+  <div class="alert alert-danger" ng-repeat="t in tweets.negative">
+    {{t.text}} 
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="alert alert-info" ng-repeat="t in tweets.neutral">
+    {{t.text}} 
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="alert alert-success" ng-repeat="t in tweets.positive">
+    {{t.text}} 
+  </div>
+</div>
