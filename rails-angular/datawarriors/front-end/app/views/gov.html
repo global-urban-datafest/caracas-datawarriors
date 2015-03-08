@@ -22,8 +22,8 @@
   </div>
   <div class="col-lg-5 col-md-8 col-sm-6">
     <div class="hidden-xs padding-top">
-      <h2>Alcald&iacute;a <span class="text-bold">Hipsteriana</span></h2>
-      <h3>Alcalde <span class="text-bold">Hipster Loco</span></h3>
+      <h2><span class="text-bold">{{gov.name}}</span></h2>
+      <h3>Alcalde <span class="text-bold">{{gov.mayor}}</span></h3>
       
       <a class="text-primary"href="#">
 	<span class="fa-stack fa-lg">
@@ -33,8 +33,8 @@
       </a>
     </div>
     <div class="visible-xs-block text-center">
-      <h2>Alcald&iacute;a <span class="text-bold">Hipsteriana</span></h2>
-      <h3>Alcalde <span class="text-bold">Hipster Loco</span></h3>
+      <h2><span class="text-bold">{{gov.name}}</span></h2>
+      <h3>Alcalde <span class="text-bold">{{gov.mayor}}</span></h3>
       
       <a class="text-primary" href="#">
 	<span class="fa-stack fa-lg">
@@ -87,12 +87,8 @@
   </div>
   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-class="{true: 'hidden'}[politicas % 2 == 1]">
     <ul>
-    <li>Elemento i</li>
-    <li>Elemento i</li>
-    <li>Elemento i</li>
-    <li>Elemento i</li>
-    <li>Elemento i</li>
-      </ul>
+      <li ng-repeat="p in gov.politics">{{p}}</li>
+    </ul>
   </div>
 </div>
 
