@@ -2,7 +2,7 @@
 <div class="row">
   <br/>
   <div class="text-right">
-    <a class="text-primary" href="/">
+    <a  ng-class="gov.id == 0 ? 'color-green' : 'color-red" href="/#/">
       <span class="fa-stack fa-lg">
 	<i class="fa fa-circle fa-stack-2x"></i>
 	<i class="fa fa-angle-left fa-stack-1x fa-inverse"></i>
@@ -14,10 +14,10 @@
   <div class="col-lg-3 col-md-4 col-sm-6">
     <br/>
     <div class="text-center visible-xs-block">
-      <img class="img-circle"  src="/images/avatar.jpg">
+      <img class="img-circle"  src="/images/{{ gov.id }}.jpg">
     </div>
     <div class="text-right hidden-xs">
-      <img class="img-circle"  src="/images/avatar.jpg">
+      <img class="img-circle"  src="/images/{{ gov.id }}.jpg">
     </div>
   </div>
   <div class="col-lg-5 col-md-8 col-sm-6">
@@ -25,7 +25,7 @@
       <h2><span class="text-bold">{{gov.name}}</span></h2>
       <h3>Alcalde <span class="text-bold">{{gov.mayor}}</span></h3>
       
-      <a class="text-primary"href="#">
+      <a ng-class="gov.id == 0 ? 'color-green' : 'color-red" href="#">
 	<span class="fa-stack fa-lg">
 	  <i class="fa fa-circle fa-stack-2x"></i>
 	  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
@@ -36,7 +36,7 @@
       <h2><span class="text-bold">{{gov.name}}</span></h2>
       <h3>Alcalde <span class="text-bold">{{gov.mayor}}</span></h3>
       
-      <a class="text-primary" href="#">
+      <a ng-class="gov.id == 0 ? 'color-green' : 'color-red" href="#">
 	<span class="fa-stack fa-lg">
 	  <i class="fa fa-circle fa-stack-2x"></i>
 	  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
@@ -47,19 +47,19 @@
   <div class="col-lg-4 col-md-12 col-sm-12 text-center">
     <hr class="hidden-lg">
     <h2 class="text-center">Categor&iacute;as</h2>
-    <a href="#" class="text-primary">
+    <a href="#" ng-class="gov.id == 0 ? 'color-green' : 'color-red">
       <span class="fa-stack fa-3x">
 	<i class="fa fa-circle fa-stack-2x"></i>
 	<i class="fa fa-gavel fa-stack-1x fa-inverse"></i>
       </span>
     </a>
-    <a href="#" class="text-primary text-selected">
+    <a href="#" ng-class="gov.id == 0 ? 'color-green' : 'color-red">
       <span class="fa-stack fa-3x">
 	<i class="fa fa-circle fa-stack-2x"></i>
 	<i class="fa fa-trash fa-stack-1x fa-inverse"></i>
       </span>
     </a>
-    <a href="#" class="text-primary">
+    <a href="#" ng-class="gov.id == 0 ? 'color-green' : 'color-red">
       <span class="fa-stack fa-3x">
 	<i class="fa fa-circle fa-stack-2x"></i>
 	<i class="fa fa-car fa-stack-1x fa-inverse"></i>
@@ -77,7 +77,7 @@
   </div>
   <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
     <div class="text-right">
-      <a class="text-primary" href="#" ng-click="politicas=politicas + 1" ng-init="politicas=0">
+      <a  ng-class="gov.id == 0 ? 'color-green' : 'color-red" href="#" ng-click="politicas=politicas + 1" ng-init="politicas=0">
 	<span class="fa-stack fa-lg">
 	  <i class="fa fa-circle fa-stack-2x"></i>
 	  <i class="fa fa-angle-up fa-stack-1x fa-inverse" ng-class="{true: 'fa-angle-down'}[politicas % 2 == 1]"></i>
