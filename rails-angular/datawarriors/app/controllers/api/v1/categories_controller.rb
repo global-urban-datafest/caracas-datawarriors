@@ -1,8 +1,12 @@
 class Api::V1::CategoriesController < ApplicationController
 
   def index
-    params.require(:gov, :category)
-    @categories = Category.only(:id, :name)
+    @categories = Categories.only(:id, :name)
+    render :status => 200, :json => @categories
+  end
+
+  def all
+    @categories = Categories.only(:id, :name)
     render :status => 200, :json => @categories
   end
 
