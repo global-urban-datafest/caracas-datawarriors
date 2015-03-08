@@ -5,10 +5,11 @@ govControllers.controller('govProfileCtr', [
   '$scope',
   '$state',
   'Tweets',
-  function($scope, $state, Tweets) {
-    if ($state.params.govId == 0) {
+  'Categories',
+  function($scope, $state, Tweets, Categories) {
+    if ($state.params.govId == 1) {
       $scope.gov = {
-        id: 0,
+        id: 1,
         name: "Alcaldía del Hatillo",
         mayor: "David Smolansky",
         politics: [
@@ -19,10 +20,30 @@ govControllers.controller('govProfileCtr', [
       };
     } else {
       $scope.gov = {
-        id: 1,
+        id: 2,
         name: "Alcaldía de Sucre",
         mayor: "Carlos Oscariz",
         politics: ["1", "2"]
       };
     }
+    
+    $scope.goCategory = function(index) {
+      $state.go('gov.profile.category', {categoryId: index});
+    };
+
+    $scope.goCategory(0);
+
+    
+}]);
+
+govControllers.controller('govCategorieCtr', [
+  '$scope',
+  '$state',
+  'Tweets',
+  'Categories',
+  function($scope, $state, Tweets, Categories) {
+    $scope.category = $state.params.categoryId;
+    Tweets.sentiment($state.params.govId, $state.params.categoryId);
+
+    
 }]);

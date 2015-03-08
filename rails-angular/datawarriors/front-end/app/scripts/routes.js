@@ -25,5 +25,10 @@ angular.module('datawarriors').config([
      url: '/:govId',
      templateUrl: "views/gov.html",
      controller: "govProfileCtr"
+   })
+   .state('gov.profile.category', {
+     url: '/category/:categoryId',
+     templateUrl: "views/tweet_sentiment.html",
+     controller: "govCategorieCtr"
    });
   }]);

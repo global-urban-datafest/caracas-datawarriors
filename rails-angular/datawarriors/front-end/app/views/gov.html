@@ -47,19 +47,19 @@
   <div class="col-lg-4 col-md-12 col-sm-12 text-center">
     <hr class="hidden-lg">
     <h2 class="text-center">Categor&iacute;as</h2>
-    <a href="#" class="text-primary">
+    <a href="" class="text-primary" ng-class="{'text-selected': category==2}" ng-click="goCategory(2)">
       <span class="fa-stack fa-3x">
 	<i class="fa fa-circle fa-stack-2x"></i>
 	<i class="fa fa-gavel fa-stack-1x fa-inverse"></i>
       </span>
     </a>
-    <a href="#" class="text-primary text-selected">
+    <a href="" class="text-primary" ng-class="{'text-selected': category==0}"  ng-click="goCategory(0)">
       <span class="fa-stack fa-3x">
 	<i class="fa fa-circle fa-stack-2x"></i>
 	<i class="fa fa-trash fa-stack-1x fa-inverse"></i>
       </span>
     </a>
-    <a href="#" class="text-primary">
+    <a href="" class="text-primary" ng-class="{'text-selected': category==1}"  ng-click="goCategory(1)">
       <span class="fa-stack fa-3x">
 	<i class="fa fa-circle fa-stack-2x"></i>
 	<i class="fa fa-car fa-stack-1x fa-inverse"></i>
@@ -100,8 +100,10 @@
     <div class="text-right">
       
     </div>
-
+    
     <!-- UI View-->
+    <ui-view>
+    </ui-view>
     
   </div>
 </div>

@@ -7,23 +7,22 @@ restServices.factory('Tweets', [
   'API_PREFIX',
   function($http, API_PREFIX){
     return {
-      getall: function(gov, category) {
-        return $http.post(API_PREFIX + '/tweets.json', {category: category, gov: gov});
+      all: function(gov, category) {
+        return $http.get(API_PREFIX + '/tweets.json', {params: {category: category, gov: gov}});
       },
-      getsentiment: function(gov, category) {
-        return $http.post(API_PREFIX + '/tweets.json', {category: category, gov: gov});
+      sentiment: function(gov, category) {
+        return $http.get(API_PREFIX + '/tweets/sentiment.json', {params: {category: category, gov: gov}});
       }
-      //getone: function(id) {
-        //return $http.get(API_PREFIX + '/establishments/'+ id +'.json');
-      //},
-      //users: function(id){
-        //return $http.get(API_PREFIX + '/establishments/' + id + '/users.json');
-      //},
-      //getall: function() {
-        //return $http.get(API_PREFIX + '/establishments.json');
-      //},
-      //getall_sa: function () {
-        //return $http.get(API_PREFIX + '/establishments/all.json');
-      //}
+    };
+}]);
+
+restServices.factory('Categories', [
+  '$http',
+  'API_PREFIX',
+  function($http, API_PREFIX){
+    return {
+      all: function() {
+        return $http.get(API_PREFIX + '/categories.json');
+      }
     };
 }]);
