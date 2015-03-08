@@ -6,10 +6,11 @@ import pickle
 parser = optparse.OptionParser()
 parser.add_option('-m', '--model', help='path to serialize trained model', type='string', dest='model_out')
 parser.add_option('-f', '--feat', help='path to serialize trained feature extractor', type='string', dest='feat_out')
+parser.add_option('-h', '--hostname', help='hostname', type='string', dest='hostname')
 
 (opts, args) = parser.parse_args()
 
-mandatories = ['model_out', 'feat_out']
+mandatories = ['model_out', 'feat_out', 'hostname']
 for m in mandatories:
     if not opts.__dict__[m]:
         print "mandatory option missing"
@@ -17,7 +18,7 @@ for m in mandatories:
         exit(-1)
 
 
-db = db_interface.DBInterface('192.168.1.144')
+db = db_interface.DBInterface(opts.hostname)
 db.connect()
 (tweet_text, tweet_id) = db.get_tweets()
 tweet_text = [x.split() for x in tweet_text]
