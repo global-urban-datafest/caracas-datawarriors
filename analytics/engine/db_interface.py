@@ -55,7 +55,7 @@ class DBInterface():
 
     def set_predicted_sentiment(self, tweet_id, sentiment):
         try:
-            self.db.tweets.update({'id': tweet_id}, {'$set': {'sentiment': sentiment}})
+            self.db.tweets.update({'id': tweet_id}, {'$set': {'sentiment': sentiment}}, upsert=True)
             return 1
         except Exception, e:
             print str(e)
@@ -63,7 +63,7 @@ class DBInterface():
 
     def set_neighbourhood(self, tweet_id, neighbourhood):
         try:
-            self.db.tweets.update({'id': tweet_id}, {'$set': {'neighbourhood': neighbourhood}})
+            self.db.tweets.update({'id': tweet_id}, {'$set': {'neighbourhood': neighbourhood}}, upsert=True)
             return 1
         except Exception, e:
             print str(e)
@@ -71,7 +71,7 @@ class DBInterface():
 
     def set_preprocessed_text(self, tweet_id, preproc_text):
         try:
-            self.db.tweets.update({'id': tweet_id}, {'$set': {'preproc_text': preproc_text}})
+            self.db.tweets.update({'id': tweet_id}, {'$set': {'preproc_text': preproc_text}}, upsert=True)
             return 1
         except Exception, e:
             print str(e)
@@ -79,7 +79,7 @@ class DBInterface():
 
     def set_category(self, tweet_id, category):
         try:
-            self.db.tweets.update({'id': tweet_id}, {'$set': {'category': category}})
+            self.db.tweets.update({'id': tweet_id}, {'$set': {'category': category}}, upsert=True)
             return 1
         except Exception, e:
             print str(e)
@@ -111,3 +111,4 @@ class DBInterface():
         except Exception, e:
             print str(e)
             return 0
+

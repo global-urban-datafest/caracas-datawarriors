@@ -8,7 +8,7 @@ from pymongo import MongoClient
 from bson.code import Code
 
 
-db = db_interface.DBInterface('192.168.1.144')
+db = db_interface.DBInterface('10.250.251.16')
 db.connect()
 
 
@@ -69,7 +69,7 @@ if opts.processing == 'preproc':
     tweets = utils.preprocess(tweets)
 
     for (text, id) in zip(tweets, ids):
-        utils.remove_stopwords(text,opts.filename)
+        text = utils.remove_stopwords(text,opts.filename)
         if db.set_preprocessed_text(id, text):
             prep_count += 1
     print "Preprocessed tweets inserted:", prep_count
@@ -92,9 +92,9 @@ if opts.processing == 'location':
 
 if opts.processing == 'category':
     key_count = 0
-    regexes = [r'(basura|aseo|reciclaje|recliclar|limpieza|desechos)', \
-               r'(calle|hueco|semaforo|trafico|cola|congestion|vias|via|avenida|remolque|remolcar|ciclovia)', \
-               r'(secuestro|robo|secuestraron|robaron|asaltaron|asalto|policia|inseguridad|inseguro)']
+    regexes = [r'(\W|^)(basura|aseo|reciclaje|recliclar|limpieza|desechos)(\W|$)', \
+               r'(\W|^)(calle|hueco|semaforo|trafico|cola|congestion|vias|via|avenida|remolque|remolcar|ciclovia)(\W|$)', \
+               r'(\W|^)(secuestro|robo|secuestraron|robaron|asaltaron|asalto|policia|inseguridad|inseguro)(\W|$)']
 
     categories = [0, 1, 2]
 
@@ -105,6 +105,11 @@ if opts.processing == 'category':
     for (text, id) in zip(tweets, ids):
         for (reg, cat) in zip(regexes, categories):
             if re.search(reg, text):
+                #if cat == 0:
+                #    if id== 574251050141630464:
+                #        print id, text
+                #    print reg, cat
+                #    print text
                 if db.set_category(id, cat):
                     key_count += 1
 
