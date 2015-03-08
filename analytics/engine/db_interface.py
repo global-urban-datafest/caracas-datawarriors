@@ -18,3 +18,18 @@ class DBInterface():
             return 1
         except pymongo.errors.DuplicateKeyError:
             return 0
+
+    def get_training_data(self, limit_size):
+        print "get_training_data"
+        print self.db
+        try:
+            res_pos = self.db.sentimentTrain.find({'sentiment':1},{'text':1}).limit(limit_size)
+            res_neg = self.db.sentimentTrain.find({'sentiment':-1},{'text':1}).limit(limit_size)
+            res_neu = self.db.sentimentTrain.find({'sentiment':0},{'text':1}).limit(limit_size)
+            res_non = self.db.sentimentTrain.find({'sentiment':-2},{'text':1}).limit(limit_size)
+            print res_pos
+            print len(res_pos), len(res_neg), len(res_neu), len(res_none)
+            return (res_pos, res_neg, res_neu, res_non)
+        except Exception, e:
+            print str(e)
+
