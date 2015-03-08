@@ -166,3 +166,15 @@ class DBInterface():
         self.db[collection_name].remove()
         print self.db[collection_name].count()
 
+    def get_category_keywords(self):
+        try:
+            self.db.categories.find({},{"cat_id":1, "keywords":1})
+            results = [e for e in results]
+            keywords = [e["keywords"] for e in results]
+            cat_ids = [e["cat_id"] for e in results]
+            return keywords, cat_ids
+        except Exception, e:
+            print str(e)
+            return [], []
+
+

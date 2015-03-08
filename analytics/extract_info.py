@@ -16,6 +16,7 @@ parser = optparse.OptionParser()
 parser.add_option('-s', '--stopwords', help='stopword file', type='string', dest='s_filename' )
 parser.add_option('-n', '--neighbourhoods', help='neighbourhood file', type='string', dest='n_filename' )
 parser.add_option('-p', '--processsing', help='processing type: preproc, location, category', type='string', dest='processing' )
+parser.add_option('-h', '--hostname', help='hostname', type='string', dest='hostname')
 (opts, args) = parser.parse_args()
 
 
@@ -35,6 +36,11 @@ elif (opts.processing == 'stopwords' or opts.processing == 'preproc') and not op
     print "Missing stopword file"
     parser.print_help()
     exit(-1)
+
+
+db = db_interface.DBInterface(opts.hostname)
+db.connect()
+
 
 # preprocess
 if opts.processing == 'preproc':
@@ -65,12 +71,11 @@ if opts.processing == 'location':
     print "Locations inserted:", loc_count
 
 if opts.processing == 'category':
-    key_count = 0
-    regexes = [r'(\W|^)(basura|aseo|reciclaje|recliclar|limpieza|desechos)(\W|$)', \
-               r'(\W|^)(calle|hueco|semaforo|trafico|cola|congestion|vias|via|avenida|remolque|remolcar|ciclovia)(\W|$)', \
-               r'(\W|^)(secuestro|robo|secuestraron|robaron|asaltaron|asalto|policia|inseguridad|inseguro)(\W|$)']
 
-    categories = [0, 1, 2]
+    key_count = 0
+    keywords, categories = db.get_category_keywords()
+
+    regexes = ["(\W|^)("+k+")(\W|$)" for k in keywords]
 
     tweets, ids = db.get_tweets()
     print len(tweets)
@@ -79,11 +84,6 @@ if opts.processing == 'category':
     for (text, id) in zip(tweets, ids):
         for (reg, cat) in zip(regexes, categories):
             if re.search(reg, text):
-                #if cat == 0:
-                #    if id== 574251050141630464:
-                #        print id, text
-                #    print reg, cat
-                #    print text
                 if db.set_category(id, cat):
                     key_count += 1
 
