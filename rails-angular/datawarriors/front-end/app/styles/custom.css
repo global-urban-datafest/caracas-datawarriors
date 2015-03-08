@@ -25,3 +25,20 @@
 .hidden {
   visibility: none;
 }
+
+.inline {
+  display: inline;
+  margin-left: 5px;
+}
+
+.color-green {
+  color: #5cb85c !important;
+}
+
+.color-yellow {
+  color: #f0ad4e !important;
+}
+
+.color-red {
+  color: #d9534f !important;
+}
