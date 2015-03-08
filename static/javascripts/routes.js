@@ -16,4 +16,10 @@ angular.module('datawarriors').config([
      url: '/',
      templateUrl: "/static/views/index.html"
    });
+
+  $stateProvider
+   .state('category', {
+     url: '/category',
+     templateUrl: "/static/views/category.html"
+   });
   }]);
