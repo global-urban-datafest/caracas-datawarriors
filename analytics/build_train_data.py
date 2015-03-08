@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import optparse
 
 from engine import db_interface
@@ -14,7 +16,7 @@ for m in mandatories:
         parser.print_help()
         exit(-1)
 
-db = db_interface.DBInterface()
+db = db_interface.DBInterface('localhost')
 constructor = trainset_constructor.TrainsetConstructor(opts.filename, db)
 
 constructor.run()
