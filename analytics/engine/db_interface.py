@@ -76,3 +76,11 @@ class DBInterface():
         except Exception, e:
             print str(e)
             return 0
+
+    def set_category(self, tweet_id, category):
+        try:
+            self.db.tweets.update({'id': tweet_id}, {'$set': {'category': category}})
+            return 1
+        except Exception, e:
+            print str(e)
+            return 0
