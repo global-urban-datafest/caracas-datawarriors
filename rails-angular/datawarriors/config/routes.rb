@@ -3,7 +3,15 @@ Datawarriors::Application.routes.draw do
   
   namespace :api do
     namespace :v1 do
-      resources :tweets, only: [:index]
+      
+      resources :tweets, only: [:index] do
+        get 'sentiment', on: :collection, action: 'sentiment'
+      end
+
+      resources :categories, only: [:index]
+
+      resources :words, only: [:index]
+      
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.
