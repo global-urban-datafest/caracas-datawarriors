@@ -3,6 +3,22 @@
 import twython
 from engine import db_interface
 import time
+import optparse
+
+
+parser = optparse.OptionParser()
+parser.add_option('-f', '--file', type='string', dest='filename', action='append')
+parser.add_option('-h', '--hostname', help='hostname', type='string', dest='hostname')
+
+(opts, args) = parser.parse_args()
+
+mandatories = ['filename', 'hostname']
+for m in mandatories:
+    if not opts.__dict__[m]:
+        print "mandatory option missing"
+        parser.print_help()
+        exit(-1)
+
 
 consumer_key = "omUMc9Ix5UP8n10eNtJNfRwmj"
 consumer_secret = "53mVRyd5rxsDm8x6Dqxg3gBb6FzpiiCYyXTjgNcOkoaJpgpyFo"
@@ -13,25 +29,21 @@ access_token = "83968199-rJcVfLdTCY8qvXsGNEqzIy9ZxZ3FBxEkxZzHFewg8"
 api = twython.Twython(app_key=consumer_key, app_secret=consumer_secret,\
                       oauth_token=access_token, oauth_token_secret=access_token_secret)
 
-#query = "ElHatillo OR dsmolansky OR traficohatillo OR FospucaHatillo OR\
-#             PoliciaHatillo OR HatilloAtiende OR SomosElHatillo"
-#gov_id = 1
-
-#query = "AlcaldiadeSucre OR CarlosOcariz OR polisucre_pms OR PCSucre \
-#        OR imapsas OR obras_alc_sucre OR PorBuenCamino"
-#gov_id = 2
-
-#query = "ElHatillo OR Smolansky OR PJ_ElHatillo OR ViveElHatillo OR ADHatillo OR LaLagunita OR culturaciudadana \
-#        OR ViveElHatillo OR MiAlcaldiaEnLaCalle OR CalidadDeVias OR ElHatilloBlindado OR LaBoyera OR LosPinos \
-#        OR YoContribuyoPorElHatillo OR CalcoMultas OR PlanCalidadDeVias"
-#gov_id = 1
-
-query = "PadrinosPoliciales OR Imasinforma OR petare OR PorBuenCamino OR GestionaTuRollo OR PetareCamina \
-         OR PoliSucre"
-gov_id = 2
+queries = []
+gov_ids = []
+i = 0
+for filename in opts.filename:
+    queries.append(open(filename).read().split())
+    queries.append(" OR ".join(query))
+    queries.append(i)
+    i+= 1
 
 
-db = db_interface.DBInterface('192.168.1.144')
+query = queries[0]
+gov_id = [0]
+
+
+db = db_interface.DBInterface(opts.hostname)
 db.connect()
 n_max_id = 0
 
