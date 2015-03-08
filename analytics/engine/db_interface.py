@@ -2,8 +2,8 @@ import pymongo
 
 class DBInterface():
 
-    def __init__(self):
-        self.hostname = 'localhost'
+    def __init__(self, hostname):
+        self.hostname = hostname
         self.port = 27017
         self.client = None
         self.db = None

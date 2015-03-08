@@ -163,21 +163,3 @@ class StopWordsCount(FeatureExtractor):
         return self.min_max(self.minim, self.maxim, feature)
 
 
-fe = ConcatenateFeatures([UnigramFeatures("spanish_stopwords.data"),
-                          TweetWordCount(),
-                          StopWordsCount("spanish_stopwords.data"),
-                          HappyEmoticonsCount(),
-                          SadEmoticonsCount(),
-                          UrlCount(),
-                          HashtagCount(),
-                          QuoteMarkCount(),
-                          InterrogationSequenceCount(),
-                          ExclamationSequenceCount(),
-                          ElongatedWordCount(),
-                          TitleWordCount(),
-                          UpperWordCount()
-                          ])
-
-#x = fe.run([["Holaaaaa", 'soy?"', "ML", ":)!"], ["YO", "#soy", "anaaaaaa", "la", "#rana!!!!"],
-#["NOOO", "Soy", "una", '"rana"!!', ":(", "http://www.analarana.com"]])
-#print x
