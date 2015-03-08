@@ -5,8 +5,7 @@ govControllers.controller('govProfileCtr', [
   '$scope',
   '$state',
   'Tweets',
-  'Categories',
-  function($scope, $state, Tweets, Categories) {
+  function($scope, $state, Tweets) {
     if ($state.params.govId == 1) {
       $scope.gov = {
         id: 1,
@@ -33,8 +32,19 @@ govControllers.controller('govProfileCtr', [
     }
     
     $scope.goCategory = function(index) {
+      if ($state.current.name =="gov.profile.relevants")
+        $state.go('gov.profile.relevants', {relevanceId: index});
+      else
+        $state.go('gov.profile.category', {categoryId: index});
+
+    };
+    $scope.goSentiment = function(index) {
       $state.go('gov.profile.category', {categoryId: index});
     };
+    $scope.goRelevance = function(index) {
+      $state.go('gov.profile.relevants', {relevanceId: index});
+    };
+
 
     $scope.goCategory(0);
 
@@ -45,11 +55,26 @@ govControllers.controller('govCategorieCtr', [
   '$scope',
   '$state',
   'Tweets',
-  'Categories',
-  function($scope, $state, Tweets, Categories) {
+  function($scope, $state, Tweets) {
     $scope.category = $state.params.categoryId;
     Tweets.sentiment($state.params.govId, $state.params.categoryId).success(function(data){
       $scope.tweets = data;
       window.tweets = $scope.tweets;
+    });
+}]);
+
+govControllers.controller('govRelevantCtr', [
+  '$scope',
+  '$state',
+  'Relevants',
+  function($scope, $state, Words) {
+    $scope.category = $state.params.categoryId;
+    $scope.colors = ["#800026", "#bd0026", "#e31a1c", "#fc4e2a", "#fd8d3c", "#feb24c", "#fed976"];
+    Words.all($state.params.govId, $state.params.relevanceId).success(function(data){
+      $scope.words_raw = data[0];
+      $scope.words = $.map($scope.words_raw.neighbourhoods, function(w){
+        return {text: w._id, weight: w.value} 
+      })
+      $scope.arrived = true;
     });
 }]);

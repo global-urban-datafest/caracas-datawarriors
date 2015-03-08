@@ -31,6 +31,11 @@ angular.module('datawarriors').config([
      url: '/category/:categoryId',
      templateUrl: "views/tweet_sentiment.html",
      controller: "govCategorieCtr"
+   })
+   .state('gov.profile.relevants', {
+     url: '/relevants/:relevanceId',
+     templateUrl: "views/relevant_words.html",
+     controller: "govRelevantCtr"
    });
   }]);
 

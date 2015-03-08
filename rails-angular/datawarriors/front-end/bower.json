@@ -15,7 +15,9 @@
     "angular-touch": "1.2.16",
     "angular-route": "1.2.16",
     "angular-ui-router": "0.2.11",
-    "angular-bootstrap": "0.11.2"
+    "angular-bootstrap": "0.11.2",
+    "angular-jqcloud2":"",
+    "angular-jqcloud":""
   },
   "devDependencies": {
     "angular-mocks": "1.2.16",

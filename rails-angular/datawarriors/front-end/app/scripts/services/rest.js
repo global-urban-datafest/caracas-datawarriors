@@ -16,13 +16,13 @@ restServices.factory('Tweets', [
     };
 }]);
 
-restServices.factory('Categories', [
+restServices.factory('Relevants', [
   '$http',
   'API_PREFIX',
   function($http, API_PREFIX){
     return {
-      all: function() {
-        return $http.get(API_PREFIX + '/categories.json');
+      all: function(gov, category) {
+        return $http.get(API_PREFIX + '/relevants.json',  {params: {category: category, gov: gov}});
       }
     };
 }]);

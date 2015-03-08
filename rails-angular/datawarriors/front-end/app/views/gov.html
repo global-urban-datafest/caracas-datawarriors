@@ -97,8 +97,19 @@
 <!-- Tweets -->
 <div class="row">
   <div class="col-lg-12">
-    <div class="text-right">
-      
+    <div class="text-center">
+      <a ng-class="gov.id == 1 ? 'color-green' : 'color-yellow'" ng-click="goRelevance(0)">
+          <span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-map-marker fa-stack-1x fa-inverse" ng-class="{true: 'fa-angle-down'}[politicas % 2 == 1]"></i>
+          </span>
+      </a>
+      <a ng-class="gov.id == 1 ? 'color-green' : 'color-yellow'" ng-click="goSentiment(0)">
+          <span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-heart fa-stack-1x fa-inverse" ng-class="{true: 'fa-angle-down'}[politicas % 2 == 1]"></i>
+          </span>
+      </a>
     </div>
     
     <!-- UI View-->
