@@ -60,3 +60,19 @@ class DBInterface():
         except Exception, e:
             print str(e)
             return 0
+
+    def set_neighbourhood(self, tweet_id, neighbourhood):
+        try:
+            self.db.tweets.update({'id': tweet_id}, {'$set': {'neighbourhood': neighbourhood}})
+            return 1
+        except Exception, e:
+            print str(e)
+            return 0
+
+    def set_preprocessed_text(self, tweet_id, preproc_text):
+        try:
+            self.db.tweets.update({'id': tweet_id}, {'$set': {'preproc_text': preproc_text}})
+            return 1
+        except Exception, e:
+            print str(e)
+            return 0
