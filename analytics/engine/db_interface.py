@@ -33,3 +33,10 @@ class DBInterface():
         except Exception, e:
             print str(e)
 
+    def set_tweet(self, tweet):
+        try:
+            self.db.tweets.insert(tweet)
+            return 1
+        except pymongo.errors.DuplicateKeyError:
+            print "Duplicate Error"
+            return 0
