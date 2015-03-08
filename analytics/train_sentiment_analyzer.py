@@ -11,19 +11,21 @@ parser = optparse.OptionParser()
 parser.add_option('-s', '--stopwords', help='stopword file', type='string', dest='stopwords')
 parser.add_option('-m', '--model', help='path to serialize trained model', type='string', dest='model_out')
 parser.add_option('-f', '--feat', help='path to serialize trained feature extractor', type='string', dest='feat_out')
+parser.add_option('-h','--hostname', help='hostname', type='string', dest='hostname')
+parser.add_option('-t', '--training size', help='size of each training batch', type='string', dest='train_size')
 
 (opts, args) = parser.parse_args()
 
-mandatories = ['stopwords', 'model_out', 'feat_out']
+mandatories = ['stopwords', 'model_out', 'feat_out', 'hostname']
 for m in mandatories:
     if not opts.__dict__[m]:
         print "mandatory option missing"
         parser.print_help()
         exit(-1)
 
-db = db_interface.DBInterface('localhost')
+db = db_interface.DBInterface(opts.hostname)
 db.connect()
-positives, negatives, neutral, none = db.get_training_data(2000)
+positives, negatives, neutral, none = db.get_training_data(opts.train_size)
 
 examples = positives + negatives + neutral + none
 labels = [1]*len(positives) + [-1]*len(negatives) + [0]*len(neutral) + [-2]*len(none)
